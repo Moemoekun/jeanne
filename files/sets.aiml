@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+    <category>
+        <pattern>*</pattern>
+        <template>I have no answer for that.</template>
+    </category>
+    
+    <category>
+        <pattern>MY  FAVORITE COLOR IS <set>color</set></pattern>
+        <template>Nice Choice!I like <star/> too.</template>
+    </category>
+    
+    <category>
+        <pattern>MY  FAVORITE COLOR IS *</pattern>
+        <template>Interesting, I never hear that color before.</template>
+    </category>
+    
+    <category>
+        <pattern>IS <set>number</set> A NUMBER</pattern>
+        <template>Yes, it is.</template>
+    </category>
+    
+    <category>
+        <pattern>IS * A NUMBER</pattern>
+        <template>No, it isn't.</template>
+    </category>
+    
+    
+    
+</aiml>

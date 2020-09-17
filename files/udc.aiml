@@ -1,31 +1,448 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
-    
   <category>
-    <pattern>*</pattern>
-    <template>I have no answer for that.</template>
+      <pattern>*</pattern>
+      <template>
+          <random>
+              <li>I don't understand it. You can try to enter Hi</li>
+              <li>I am sorry, tarcbot can't get you.</li>
+          </random>
+          
+      </template>
   </category>
   
-    <category>
-        <pattern>Hello</pattern>
-        <template>Hello World</template>
-    </category>
+  <category>
+      <pattern>Hello</pattern>
+      <template>
+          Hi there I am TarcBot What should I call you?
+      </template>
+  </category>
   
-    <category>
-        <pattern>Hello bot</pattern>
-        <template>Hello World</template>
-    </category>
-    
-    <category>
-        <pattern>Hello *</pattern>
-        <template>Hello World</template>
-    </category>
-    
-    <category>
-        <pattern>My name is * *</pattern>
-        <template>Hello <star/>. How are you Mr.<star index="2"/>?</template>
-    </category>
-    
+  <category>
+      <pattern>test</pattern>
+      <template>do you like me?</template>
+  </category>
+  
+  <category>
+      <pattern>Hi</pattern>
+      <template>
+          <srai>Hello</srai>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>Who am I</pattern>
+      <template>
+          I remembered that, you are <formal><get name="name"/></formal>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>What is your name</pattern>
+      <template>
+          I am TarcBot!
+      </template>
+  </category>
+  
+  <category>
+      <pattern>Who are you</pattern>
+      <template>
+          <srai>What is your name</srai>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>I am *</pattern>
+      <template>
+          <think><set name="name"><star/></set></think>
+          <random>
+            <li>Hi, <formal><star/></formal>. How I can help you?</li>
+            <li>Nice to see you <formal><star/></formal>. How I can help you?</li>
+          </random>
+          <button>
+              <text>Financial Aid</text>
+              <postback>FINANCIAL</postback>
+          </button>
+          <button>
+              <text>Freshmen Guide</text>
+              <postback>FRESHMEN</postback>
+          </button>
+          <button>
+              <text>Others question?</text>
+              <postback>Others</postback>
+          </button>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>something</pattern>
+      <template>
+          <random>
+            <li>How I can help you?</li>
+          </random>
+          <button>
+              <text>Financial Aid</text>
+              <postback>FINANCIAL</postback>
+          </button>
+          <button>
+              <text>Freshmen Guide</text>
+              <postback>FRESHMEN</postback>
+          </button>
+          <button>
+              <text>Others question?</text>
+              <postback>Others</postback>
+          </button>
+      </template>
+  </category>
+  
+  <category>
+      <that>* there I am *</that>
+      <pattern>you can call me *</pattern>
+      <template>
+          <srai>I am <star/></srai>
+      </template>
+  </category>
+  
+  <category>
+      <that>* there I am *</that>
+      <pattern>*</pattern>
+      <template>
+          <srai>I am <star/></srai>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>Financial</pattern>
+      <template>
+          <ol>
+              <li>When can I apply for financial aid in TAR UC?</li>
+              <li>I applied for financial aid last year and was not offered any aid. Can I apply this year?</li>
+              <li>How can I check my financial aid application status?</li>
+          </ol>
+          Enter 1, 2 or 3 to choose
+          <think><set name="topic">FINANCIAL</set></think>
+      </template>
+  </category>
+  
+  
+  <topic name="FINANCIAL">
+      <category>
+          <pattern>_</pattern>
+          <template>
+              <think><set name="inp"><star/></set></think>
+              <condition name="inp">
+                  <li value="1">
+                      At the beginning of Intake year. Please check the Tunku Abdul Rahman University College’s 
+                        website or the Student Loans/Scholarships notice boards at the Department of Student Affairs.
+                        <split/><delay>1</delay>You can continue choose the number.<break/>
+                            Do you have others questions?
+                  </li>
+                  <li value="2">
+                      Yes, as long as you are currently not holding any other financial aid.
+                      <split/><delay>1</delay>You can continue choose the number.<break/>
+                            Do you have others questions?
+                  </li>
+                  <li value="3">
+                      You can check your financial aid application status from Student Financial Aid 
+                      Unit (DSA, KL Main Campus), the Student Affairs Office (Branch Campus) or from 
+                      the respective loans or scholarship providers' websites.
+                      <split/><delay>1</delay>You can continue choose the number.<break/>
+                            Do you have others questions?
+                  </li>
+                  <li value="YES"><srai><set name="topic"></set>something</srai></li>
+                  <li value="NO"><set name="topic"></set>Thank you and have a nice day!<break/><think><srai>something</srai></think></li>
+                  <li>Please enter 1, 2, 3, yes, or no</li>
+              </condition>
+          </template>
+      </category>
+  </topic>
+  
+  
+  <category>
+      <pattern>FRESHMEN</pattern>
+      <template>
+          <ol>
+              <li>How to get scholarship?</li>
+              <li>What is financial aid that I can get?</li>
+          </ol>
+          Enter 1, or 2 to choose
+          <think><set name="topic">Freshmen</set></think>
+      </template>
+  </category>
+ 
+  <topic name="Freshmen">
+      <category>
+          <pattern>_</pattern>
+          <template>
+               <think><set name="inp1"><star/></set></think>
+               <condition name="inp1">
+                   <li value="1">
+                       There are PTPTN Loans, TARUC Student Loans Fund and EPF Withdrawal.<split/>
+                      For more details, you can refer to the Attachment A from the link below. <break/>
+                      <button>
+                          <text>refer to Attachment A</text>
+                          <url>https://www.tarc.edu.my/files/dsa/9BB42C5F-B35B-4864-93F7-C2AE642093B9.pdf</url>
+                        </button>
+                        <split/><delay>1</delay>You can continue choose the number.<break/>
+                            Do you have others questions?
+                   </li>
+                   <li value="2">
+                       There is a wide range of internal and external scholarships available to you.<break/>
+                       For more information please see 
+                       <link>
+                           <text>TAR UC Financial Aid (Scholarships / Grants) Website </text>
+                           <url>https://www.tarc.edu.my/dsa/financial-aid/scholarships-grants/</url>
+                       </link>
+                       <split/><delay>1</delay>You can continue choose the number.<break/>
+                            Do you have others questions?
+                   </li>
+                  <li value="YES"><srai><set name="topic"></set>something</srai></li>
+                  <li value="NO"><set name="topic"></set>Thank you and have a nice day!<break/><think><srai>something</srai></think></li>
+                  <li>Please enter 1, 2, 3, yes, or no</li>
+                </condition>
+          </template>
+      </category>
+  </topic>
+  
 
-    
+  
+  <category>
+      <pattern>Others</pattern>
+      <template>Hi <get name="name"/>, what are you confused about?</template>
+  </category>
+  
+  <category>
+      <pattern># contact #</pattern>
+      <template>
+          Dear <get name="name"/>, you can contact us for more details through the channel below<break/>
+          Tel: 03-41450123 ext 3752 / 3343<break/>
+          Fax: 03-41423166<break/>
+          WhatsApp: 0111 087 5854 (Student Career Development Centre)<break/>
+          Email: dsa@tarc.edu.my<break/>
+      </template>
+  </category>
+  
+  <category>
+      <pattern># scholarship #</pattern>
+      <template>
+          <srai>Freshmen</srai>
+      </template>
+  </category>
+  
+  <category>
+      <pattern># food #</pattern>
+      <template>
+          Our campus has many stalls for the student to choose. Example Yumyum, Red Brick.<break/>
+          Most of the food type is available in our campus. For instance different type of noodles, nasi lemak, chicken rice and so on.<break/>
+          <card>
+              <image>https://www.tarc.edu.my/files/dsa/BDDFAD82-26B2-4A5C-90B4-27B10535852E.JPG</image>
+              <title>Stall and Restaurant</title>
+              <subtitle>Variety of food is available</subtitle>
+              <button>
+                  <text>Click here for more detail about our food!</text>
+                  <url>https://www.tarc.edu.my/dsa/food-and-beverage/</url>
+              </button>
+          </card>
+      </template>
+      
+      <category>
+          <pattern># stall #</pattern>
+          <template>
+              <srai>food</srai>
+          </template>
+      </category>
+  </category>
+  
+  <category>
+      <pattern># choose # course #</pattern>
+      <template>
+          I know it is difficult to decide. Let me try to to help you.<break/>
+          What is your favorite category? Please enter number to choose.<break/>
+          <button>
+              <text>Science</text>
+              <postback>Science</postback>
+          </button>
+          <button>
+              <text>Maths</text>
+              <postback>Maths</postback>
+          </button>
+          <button>
+              <text>Languages</text>
+              <postback>Language</postback>
+          </button>
+          <button>
+              <text>Art</text>
+              <postback>Art</postback>
+          </button>
+      </template>
+  </category>
+
+<category>
+    <pattern># course #</pattern>
+    <template><srai><star/> choose <star index="2"/> course <star index="3"/></srai></template>
+</category>
+  
+  <category>
+      <pattern>Science</pattern>
+      <template>
+          Great! I love science too.<break/>
+          Dear <get name="name"/>, you like computer technology more or more to physics/chemistry?
+          <button>
+              <text>Computer Technology</text>
+              <postback>Computer</postback>
+          </button>
+          <button>
+              <text>Physics/Chemistry</text>
+              <postback>Physics</postback>
+          </button>
+      </template>
+  </category>
+  
+  <category>
+      <pattern>Computer</pattern>
+      <template>
+          From your choice, I can suggest you to choose the course related to Computer Technology.<break/>
+          You may choose Information Security, Software Engineering, or Internet Technology.These are the
+          course which are more popular now.<split/>
+          <delay>6</delay>
+          For more details about the courses, you can refer to the link below to view the courses in details.
+          <link>
+              <text>Information Security</text>
+              <url>https://www.tarc.edu.my/focs/programmes/bachelor-degree/bachelor-of-information-technology-honours-in-information-security/</url>
+          </link>
+          <link>
+              <text>Software Engineering</text>
+              <url>https://www.tarc.edu.my/focs/programmes/bachelor-degree/bachelor-of-computer-science-honours-in-software-engineering/</url>
+          </link>
+          <link>
+              <text>Internet Technology</text>
+              <url>https://www.tarc.edu.my/focs/programmes/bachelor-degree/bachelor-of-information-technology-honours-in-internet-technology/</url>
+          </link>
+          <link>
+              <text>Others Courses</text>
+              <url>https://www.tarc.edu.my/admissions/programmes/programme-offered-a-z/undergraduate-programme/</url>
+          </link>
+      </template>
+  </category>
+
+<category>
+    <pattern>Physics</pattern>
+    <template>
+        From your choice, I can suggest you to choose the course related to Physics and Chemistry.<break/>
+          You may choose Analytical Chemistry, Food Science, or Bioscience with Chemistry.These are the
+          course which are more popular now.<split/>
+          <delay>6</delay>
+          For more details about the courses, you can refer to the link below.
+          <link>
+              <text>Analytical Chemistry</text>
+              <url>https://www.tarc.edu.my/foas/programmes/bachelor-degree/bachelor-of-science-hons-in-analytical-chemistry/</url>
+          </link>
+          <link>
+              <text>Food Science</text>
+              <url>https://www.tarc.edu.my/foas/programmes/bachelor-degree/bachelor-of-science-hons-in-food-science/</url>
+          </link>
+          <link>
+              <text>Bioscience with Chemistry</text>
+              <url>https://www.tarc.edu.my/foas/programmes/bachelor-degree/bachelor-of-science-hons-in-bioscience-with-chemistry/</url>
+          </link>
+          <link>
+              <text>Others Courses</text>
+              <url>https://www.tarc.edu.my/admissions/programmes/programme-offered-a-z/undergraduate-programme/</url>
+          </link>
+    </template>
+</category>
+
+<category>
+    <pattern>Maths</pattern>
+    <template>
+        Great! I love maths too.<break/>
+          Dear <get name="name"/>, here is the suggestion for you.<break/>
+          If you like finance more, you can choose Finance or Economics<break/>
+          Besides, you may choose Quantity Surveying which is quite famous now.
+          <delay>6</delay>
+          For more details about the courses, you can refer to the link below.
+          <link>
+              <text>Finance</text>
+              <url>https://www.tarc.edu.my/fafb/programmes/bachelor-degree/bachelor-of-finance-honours/</url>
+          </link>
+          <link>
+              <text>Economics</text>
+              <url>https://www.tarc.edu.my/fafb/programmes/bachelor-degree/bachelor-of-economics-honours/</url>
+          </link>
+          <link>
+              <text>Quantity Surveying</text>
+              <url>https://www.tarc.edu.my/fobe/programme/bachelor-degree/bachelor-of-quantity-surveying-honours/</url>
+          </link>
+          <link>
+              <text>Others Courses</text>
+              <url>https://www.tarc.edu.my/admissions/programmes/programme-offered-a-z/undergraduate-programme/</url>
+          </link>
+    </template>
+</category>
+
+<category>
+    <pattern>Language</pattern>
+    <template>
+        Great! I love language too.<break/> Here are my suggestions.
+        If you can speak and write fluently and good in social, Public Relations, 
+        English with Education, or English with Drama. 
+        <delay>6</delay>
+          For more details about the courses, you can refer to the link below.
+          <link>
+              <text>Public Relations</text>
+              <url>https://www.tarc.edu.my/fcci/programmes/bachelor-degree/bachelor-of-public-relations-honours/</url>
+          </link>
+          <link>
+              <text>English with Education</text>
+              <url>https://www.tarc.edu.my/fssh/programmes/bachelor-degree/bachelor-of-arts-honours-english-with-education/</url>
+          </link>
+          <link>
+              <text>English with Drama</text>
+              <url>https://www.tarc.edu.my/fssh/programmes/bachelor-degree/bachelor-of-arts-honours-english-with-drama/</url>
+          </link>
+          <link>
+              <text>Others Courses</text>
+              <url>https://www.tarc.edu.my/admissions/programmes/programme-offered-a-z/undergraduate-programme/</url>
+          </link>
+    </template>
+</category>
+
+<category>
+    <pattern>Art</pattern>
+    <template>
+        Great! I love art too.<break/>
+        Dear <get name="name"/>, here are some suggestion for you.Hope that it can help you.<break/>
+        If you like fashion more, you may choose Fashion Design while if you prefer the multimedia
+        or graphic, you may choose Graphic Design, or Creative Multimedia.
+        <delay>6</delay>
+          For more details about the courses, you can refer to the link below.
+          <link>
+              <text>Fashion Design</text>
+              <url>https://www.tarc.edu.my/fcci/programmes/bachelor-degree/bachelor-of-design-honours-in-fashion-design/</url>
+          </link>
+          <link>
+              <text>Graphic Design</text>
+              <url>https://www.tarc.edu.my/fcci/programmes/bachelor-degree/bachelor-of-design-honours-in-graphic-design/</url>
+          </link>
+          <link>
+              <text>Creative Multimedia</text>
+              <url>https://www.tarc.edu.my/fcci/programmes/bachelor-degree/bachelor-of-creative-multimedia-honours/</url>
+          </link>
+          <link>
+              <text>Others Courses</text>
+              <url>https://www.tarc.edu.my/admissions/programmes/programme-offered-a-z/undergraduate-programme/</url>
+          </link>
+    </template>
+</category>
+
+<category>
+    <pattern># Thanks #</pattern>
+    <template>
+        <random>
+            <li>You are welcome, I am also happy if I can help you.</li>
+            <li>Welcome <get name="name"/></li>
+            <li>You are welcome. Wish you have a nice day!</li>
+         </random>
+    </template>
+</category>
 </aiml>
